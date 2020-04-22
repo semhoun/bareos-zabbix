@@ -13,7 +13,7 @@ if [ ! -x $zabbixSender ] ; then exit 5 ; fi
 
 # Chose which database command to use
 case $bareosDbSgdb in
-  P) sql="PGPASSWORD=$bareosDbPass /usr/bin/psql -h$bareosDbAddr -p$bareosDbPort -U$bareosDbUser -d$bareosDbName -c" ;;
+  P) sql="PGPASSWORD=$bareosDbPass /usr/bin/psql -h$bareosDbAddr -p$bareosDbPort -U$bareosDbUser -d$bareosDbName -Atc" ;;
   M) sql="/usr/bin/mysql -N -B -h$bareosDbAddr -P$bareosDbPort -u$bareosDbUser -p$bareosDbPass -D$bareosDbName -e" ;;
   *) exit 7 ;;
 esac
@@ -62,12 +62,20 @@ $zabbixSender -z $zabbixSrvAddr -p $zabbixSrvPort -s $bareosClientName -k "bareo
 if [ $? -ne 0 ] ; then return=$(($return+4)) ; fi
 
 # Get from database the time spent by the Job and send it to Zabbix server
-bareosJobTime=$($sql "select timestampdiff(second,StartTime,EndTime) from Job where JobId=$bareosJobId;" 2>/dev/null)
+case $bareosDbSgdb in
+  P) bareosJobTime=$($sql "select extract(epoch from EndTime - StartTime) from Job where JobId=$bareosJobId;" 2>/dev/null) ;;
+  M) bareosJobTime=$($sql "select timestampdiff(second,StartTime,EndTime) from Job where JobId=$bareosJobId;" 2>/dev/null) ;;
+  *) exit 1 ;;
+esac
 $zabbixSender -z $zabbixSrvAddr -p $zabbixSrvPort -s $bareosClientName -k "bareos.$level.job.time" -o $bareosJobTime >/dev/null 2>&1
 if [ $? -ne 0 ] ; then return=$(($return+8)) ; fi
 
 # Get Job speed from database and send it to Zabbix server
-bareosJobSpeed=$($sql "select round(JobBytes/timestampdiff(second,StartTime,EndTime)/1024,2) from Job where JobId=$bareosJobId;" 2>/dev/null)
+case $bareosDbSgdb in
+  P) bareosJobSpeed=$($sql "select round(JobBytes/cast(extract(epoch from EndTime - StartTime) as numeric)/1024,2) from Job where JobId=$bareosJobId;" 2>/dev/null) ;;
+  M) bareosJobSpeed=$($sql "select round(JobBytes/timestampdiff(second,StartTime,EndTime)/1024,2) from Job where JobId=$bareosJobId;" 2>/dev/null) ;;
+  *) exit 1 ;;
+esac
 $zabbixSender -z $zabbixSrvAddr -p $zabbixSrvPort -s $bareosClientName -k "bareos.$level.job.speed" -o $bareosJobSpeed >/dev/null 2>&1
 if [ $? -ne 0 ] ; then return=$(($return+16)) ; fi
 

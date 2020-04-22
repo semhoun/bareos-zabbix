@@ -13,7 +13,7 @@ if [ ! -x $zabbixSender ] ; then exit 5 ; fi
 
 # Chose which database command to use
 case $bareosDbSgdb in
-  P) sql="PGPASSWORD=$bareosDbPass /usr/bin/psql -h$bareosDbAddr -p$bareosDbPort -U$bareosDbUser -d$bareosDbName -c" ;;
+  P) sql="PGPASSWORD=$bareosDbPass /usr/bin/psql -h$bareosDbAddr -p$bareosDbPort -U$bareosDbUser -d$bareosDbName -Atc" ;;
   M) sql="/usr/bin/mysql -N -B -h$bareosDbAddr -P$bareosDbPort -u$bareosDbUser -p$bareosDbPass -D$bareosDbName -e" ;;
   *) exit 7 ;;
 esac

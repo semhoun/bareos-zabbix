@@ -80,7 +80,7 @@ $zabbixSender -z $zabbixSrvAddr -p $zabbixSrvPort -s $bareosClientName -k "bareo
 if [ $? -ne 0 ] ; then return=$(($return+16)) ; fi
 
 # Get Job compression rate from database and send it to Zabbix server
-bareosJobCompr=$($sql "select round(1-JobBytes/ReadBytes,2) from Job where JobId=$bareosJobId;" 2>/dev/null)
+bareosJobCompr=$($sql "select round(1.0-JobBytes/(ReadBytes+0.0),2) from Job where JobId=$bareosJobId;" 2>/dev/null)
 $zabbixSender -z $zabbixSrvAddr -p $zabbixSrvPort -s $bareosClientName -k "bareos.$level.job.compr" -o $bareosJobCompr >/dev/null 2>&1
 if [ $? -ne 0 ] ; then return=$(($return+32)) ; fi
 

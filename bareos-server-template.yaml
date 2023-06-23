@@ -1,0 +1,254 @@
+zabbix_export:
+  version: '6.4'
+  template_groups:
+    - uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    - uuid: 0f4f3b9445c64628a1796f0cd25a75fe
+      template: 'Template Bareos Server'
+      name: 'Template Bareos Server'
+      description: 'See https://github.com/semhoun/bareos-zabbix'
+      templates:
+        - name: 'Template Bareos Client'
+      groups:
+        - name: Templates
+      items:
+        - uuid: bfd264286767458c953aef973ee775bc
+          name: 'Bareos Director is running'
+          key: 'proc.num[{$BAREOS.DIR}]'
+          delay: '30'
+          tags:
+            - tag: Application
+              value: Bareos
+          triggers:
+            - uuid: 5446e4143a494629b7a7fad32d8c4c3a
+              expression: 'last(/Template Bareos Server/proc.num[{$BAREOS.DIR}])=0'
+              name: 'Bareos Director is DOWN in {HOST.NAME}'
+              priority: DISASTER
+        - uuid: 71ef98d1368641ffb704bce0d8dd7cee
+          name: 'Bareos Storage is running'
+          key: 'proc.num[{$BAREOS.SD}]'
+          delay: '30'
+          tags:
+            - tag: Application
+              value: Bareos
+          triggers:
+            - uuid: 25dc3801f7d3487ca0dd5b517b3d3126
+              expression: 'last(/Template Bareos Server/proc.num[{$BAREOS.SD}])=0'
+              name: 'Bareos Storage is DOWN in {HOST.NAME}'
+              priority: DISASTER
+      macros:
+        - macro: '{$BAREOS.DIR}'
+          value: bareos-dir
+        - macro: '{$BAREOS.FD}'
+          value: bareos-fd
+        - macro: '{$BAREOS.SD}'
+          value: bareos-sd
+      dashboards:
+        - uuid: 4a14c6737fee464eb49531c222e1d18d
+          name: 'Backup Differential'
+          pages:
+            - widgets:
+                - type: graph
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Server'
+                        name: 'Backup Differential - Bytes transferred'
+                - type: graph
+                  x: '12'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Server'
+                        name: 'Backup Differential - Files transferred'
+                - type: graph
+                  'y': '5'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Server'
+                        name: 'Backup Differential - Elapsed time'
+                - type: graph
+                  x: '12'
+                  'y': '5'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Server'
+                        name: 'Backup Differential - Transfer rate'
+                - type: graph
+                  'y': '10'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Server'
+                        name: 'Backup Differential - Compression rate'
+        - uuid: 79819afe7e204580815cf68d716e57bf
+          name: 'Backup Full'
+          pages:
+            - widgets:
+                - type: graph
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Server'
+                        name: 'Backup Full - Bytes transferred'
+                - type: graph
+                  x: '12'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Server'
+                        name: 'Backup Full - Files transferred'
+                - type: graph
+                  'y': '5'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Server'
+                        name: 'Backup Full - Elapsed time'
+                - type: graph
+                  x: '12'
+                  'y': '5'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Server'
+                        name: 'Backup Full - Transfer rate'
+                - type: graph
+                  'y': '10'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Server'
+                        name: 'Backup Full - Compression rate'
+        - uuid: 6b15db5418904d389e3d19be55ffab7f
+          name: 'Backup Incremental'
+          pages:
+            - widgets:
+                - type: graph
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Server'
+                        name: 'Backup Incremental - Bytes transferred'
+                - type: graph
+                  x: '12'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Server'
+                        name: 'Backup Incremental - Files transferred'
+                - type: graph
+                  'y': '5'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Server'
+                        name: 'Backup Incremental - Elapsed time'
+                - type: graph
+                  x: '12'
+                  'y': '5'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Server'
+                        name: 'Backup Incremental - Transfer rate'
+                - type: graph
+                  'y': '10'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Server'
+                        name: 'Backup Incremental - Compression rate'

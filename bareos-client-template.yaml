@@ -1,0 +1,640 @@
+zabbix_export:
+  version: '6.4'
+  template_groups:
+    - uuid: 7df96b18c230490a9a0a9e2307226338
+      name: Templates
+  templates:
+    - uuid: 02e3276f0493476d8335b02a075de6c6
+      template: 'Template Bareos Client'
+      name: 'Template Bareos Client'
+      description: 'See https://github.com/semhoun/bareos-zabbix'
+      groups:
+        - name: Templates
+      items:
+        - uuid: a5415a02e82e4494a58abc9cc00708ef
+          name: 'Backup Differential Bytes'
+          type: TRAP
+          key: bareos.diff.job.bytes
+          delay: '0'
+          units: B
+          tags:
+            - tag: Application
+              value: Bareos
+        - uuid: fb7cd46cf07b4cf3b8570d923b8332c1
+          name: 'Backup Differential Compression'
+          type: TRAP
+          key: bareos.diff.job.compr
+          delay: '0'
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: Bareos
+        - uuid: beae4de825a14d24952f315f38b0ea4c
+          name: 'Backup Differential Files'
+          type: TRAP
+          key: bareos.diff.job.files
+          delay: '0'
+          tags:
+            - tag: Application
+              value: Bareos
+        - uuid: 7328cc276cc6499ca7e164c84285d58c
+          name: 'Backup Differential Speed'
+          type: TRAP
+          key: bareos.diff.job.speed
+          delay: '0'
+          value_type: FLOAT
+          units: KB/s
+          tags:
+            - tag: Application
+              value: Bareos
+        - uuid: 2a037dbbb6144c8785a95217078ba9f8
+          name: 'Backup Differential OK'
+          type: TRAP
+          key: bareos.diff.job.status
+          delay: '0'
+          tags:
+            - tag: Application
+              value: Bareos
+          triggers:
+            - uuid: 474f76293715423683ae7cfe991250bf
+              expression: 'last(/Template Bareos Client/bareos.diff.job.status)>1'
+              name: 'Backup Differential FAIL in {HOST.NAME}'
+              priority: AVERAGE
+        - uuid: f2c92830708b4f3eaecf5573a8c68903
+          name: 'Backup Differential Time'
+          type: TRAP
+          key: bareos.diff.job.time
+          delay: '0'
+          units: s
+          tags:
+            - tag: Application
+              value: Bareos
+        - uuid: 245611c2debf4e7d970819ef162076cb
+          name: 'Backup Full Bytes'
+          type: TRAP
+          key: bareos.full.job.bytes
+          delay: '0'
+          units: B
+          tags:
+            - tag: Application
+              value: Bareos
+        - uuid: 86ea47d082bb4aa28f6e04cb9e09eee0
+          name: 'Backup Full Compression'
+          type: TRAP
+          key: bareos.full.job.compr
+          delay: '0'
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: Bareos
+        - uuid: 8d8cf427a39044aab3c3be4a2fbe0632
+          name: 'Backup Full Files'
+          type: TRAP
+          key: bareos.full.job.files
+          delay: '0'
+          tags:
+            - tag: Application
+              value: Bareos
+        - uuid: c14fd2054d064ed6a183611258973fc5
+          name: 'Backup Full Speed'
+          type: TRAP
+          key: bareos.full.job.speed
+          delay: '0'
+          value_type: FLOAT
+          units: KB/s
+          tags:
+            - tag: Application
+              value: Bareos
+        - uuid: 54cbbe0856b04f83954d6cfbd05ad2f8
+          name: 'Backup Full OK'
+          type: TRAP
+          key: bareos.full.job.status
+          delay: '0'
+          tags:
+            - tag: Application
+              value: Bareos
+          triggers:
+            - uuid: 71ec9c67aa584063a6135cd5b3b6902e
+              expression: 'last(/Template Bareos Client/bareos.full.job.status)>1'
+              name: 'Backup Full FAIL in {HOST.NAME}'
+              priority: HIGH
+        - uuid: f90421dd26a54a69bea64111da60039c
+          name: 'Backup Full Time'
+          type: TRAP
+          key: bareos.full.job.time
+          delay: '0'
+          units: s
+          tags:
+            - tag: Application
+              value: Bareos
+        - uuid: d464818883d440d78200e9988694cf28
+          name: 'Backup Incremental Bytes'
+          type: TRAP
+          key: bareos.incr.job.bytes
+          delay: '0'
+          units: B
+          tags:
+            - tag: Application
+              value: Bareos
+        - uuid: 1b57fa6ba2f64da19e4fe9eacd13e9af
+          name: 'Backup Incremental Compression'
+          type: TRAP
+          key: bareos.incr.job.compr
+          delay: '0'
+          value_type: FLOAT
+          tags:
+            - tag: Application
+              value: Bareos
+        - uuid: 297cbe14a30449f1a2db92c9daa912a7
+          name: 'Backup Incremental Files'
+          type: TRAP
+          key: bareos.incr.job.files
+          delay: '0'
+          tags:
+            - tag: Application
+              value: Bareos
+        - uuid: 6b59c0d71f1d49f6850901db4685ed63
+          name: 'Backup Incremental Speed'
+          type: TRAP
+          key: bareos.incr.job.speed
+          delay: '0'
+          value_type: FLOAT
+          units: KB/s
+          tags:
+            - tag: Application
+              value: Bareos
+        - uuid: e202c54b6c8145d3a5300e992324e324
+          name: 'Backup Incremental OK'
+          type: TRAP
+          key: bareos.incr.job.status
+          delay: '0'
+          tags:
+            - tag: Application
+              value: Bareos
+          triggers:
+            - uuid: df72c8f8c0d84bf487a5d7d86a19adef
+              expression: 'last(/Template Bareos Client/bareos.incr.job.status)>1'
+              name: 'Backup Incremental FAIL in {HOST.NAME}'
+              priority: WARNING
+        - uuid: e1fa3ec3d88145cfbed387c047f87916
+          name: 'Backup Incremental Time'
+          type: TRAP
+          key: bareos.incr.job.time
+          delay: '0'
+          units: s
+          tags:
+            - tag: Application
+              value: Bareos
+        - uuid: e6a032e565e84510862e645d7ea596c6
+          name: 'Bareos File is running'
+          key: 'proc.num[{$BAREOS.FD}]'
+          delay: '30'
+          tags:
+            - tag: Application
+              value: Bareos
+          triggers:
+            - uuid: b49c848532f541be9a3f425d48a293ef
+              expression: 'last(/Template Bareos Client/proc.num[{$BAREOS.FD}])=0'
+              name: 'Bareos File is DOWN in {HOST.NAME}'
+              priority: HIGH
+      macros:
+        - macro: '{$BAREOS.DIR}'
+          value: bareos-dir
+        - macro: '{$BAREOS.FD}'
+          value: bareos-fd
+        - macro: '{$BAREOS.SD}'
+          value: bareos-sd
+      dashboards:
+        - uuid: 725de5f66a334adbaceca8ceb49c3cd5
+          name: 'Backup Differential'
+          pages:
+            - widgets:
+                - type: graph
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Client'
+                        name: 'Backup Differential - Bytes transferred'
+                - type: graph
+                  x: '12'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Client'
+                        name: 'Backup Differential - Files transferred'
+                - type: graph
+                  'y': '5'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Client'
+                        name: 'Backup Differential - Elapsed time'
+                - type: graph
+                  x: '12'
+                  'y': '5'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Client'
+                        name: 'Backup Differential - Transfer rate'
+                - type: graph
+                  'y': '10'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Client'
+                        name: 'Backup Differential - Compression rate'
+        - uuid: f1105cbbdd8b496b96a2a85d200f2846
+          name: 'Backup Full'
+          pages:
+            - widgets:
+                - type: graph
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Client'
+                        name: 'Backup Full - Bytes transferred'
+                - type: graph
+                  x: '12'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Client'
+                        name: 'Backup Full - Files transferred'
+                - type: graph
+                  'y': '5'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Client'
+                        name: 'Backup Full - Elapsed time'
+                - type: graph
+                  x: '12'
+                  'y': '5'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Client'
+                        name: 'Backup Full - Transfer rate'
+                - type: graph
+                  'y': '10'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Client'
+                        name: 'Backup Full - Compression rate'
+        - uuid: 8816bdfece974237bd00f0393d24cac3
+          name: 'Backup Incremental'
+          pages:
+            - widgets:
+                - type: graph
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Client'
+                        name: 'Backup Incremental - Bytes transferred'
+                - type: graph
+                  x: '12'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Client'
+                        name: 'Backup Incremental - Files transferred'
+                - type: graph
+                  'y': '5'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Client'
+                        name: 'Backup Incremental - Elapsed time'
+                - type: graph
+                  x: '12'
+                  'y': '5'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Client'
+                        name: 'Backup Incremental - Transfer rate'
+                - type: graph
+                  'y': '10'
+                  width: '12'
+                  height: '5'
+                  fields:
+                    - type: INTEGER
+                      name: source_type
+                      value: '0'
+                    - type: GRAPH
+                      name: graphid
+                      value:
+                        host: 'Template Bareos Client'
+                        name: 'Backup Incremental - Compression rate'
+  graphs:
+    - uuid: 89fba097d2ff472d9400a719c1548148
+      name: 'Backup Differential - Bytes transferred'
+      ymin_type_1: FIXED
+      graph_items:
+        - drawtype: GRADIENT_LINE
+          color: 9999FF
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.diff.job.bytes
+        - sortorder: '1'
+          drawtype: BOLD_LINE
+          color: C80000
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.diff.job.status
+    - uuid: 79e5edf57aa14c3cb6973199b23418c9
+      name: 'Backup Differential - Compression rate'
+      ymin_type_1: FIXED
+      graph_items:
+        - drawtype: GRADIENT_LINE
+          color: FF9999
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.diff.job.compr
+        - sortorder: '1'
+          drawtype: BOLD_LINE
+          color: C80000
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.diff.job.status
+    - uuid: 14e1f49eb11c4a4aa51e6b17575f3439
+      name: 'Backup Differential - Elapsed time'
+      ymin_type_1: FIXED
+      graph_items:
+        - drawtype: GRADIENT_LINE
+          color: 00EEEE
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.diff.job.time
+        - sortorder: '1'
+          drawtype: BOLD_LINE
+          color: C80000
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.diff.job.status
+    - uuid: f280e54310224f2188f406444ec53afa
+      name: 'Backup Differential - Files transferred'
+      ymin_type_1: FIXED
+      graph_items:
+        - drawtype: GRADIENT_LINE
+          color: 00C800
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.diff.job.files
+        - sortorder: '1'
+          drawtype: BOLD_LINE
+          color: C80000
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.diff.job.status
+    - uuid: 1b440ef8599b43bd8466cbacf3f9f3fd
+      name: 'Backup Differential - Transfer rate'
+      ymin_type_1: FIXED
+      graph_items:
+        - drawtype: GRADIENT_LINE
+          color: CCCC00
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.diff.job.speed
+        - sortorder: '1'
+          drawtype: BOLD_LINE
+          color: C80000
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.diff.job.status
+    - uuid: bb4e751879184f97ad0878138b5ea9fd
+      name: 'Backup Full - Bytes transferred'
+      ymin_type_1: FIXED
+      graph_items:
+        - drawtype: GRADIENT_LINE
+          color: 9999FF
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.full.job.bytes
+        - sortorder: '1'
+          drawtype: BOLD_LINE
+          color: C80000
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.full.job.status
+    - uuid: e3b1910610d0404fbbbc9e9cba91a40d
+      name: 'Backup Full - Compression rate'
+      ymin_type_1: FIXED
+      graph_items:
+        - drawtype: GRADIENT_LINE
+          color: FF9999
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.full.job.compr
+        - sortorder: '1'
+          drawtype: BOLD_LINE
+          color: C80000
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.full.job.status
+    - uuid: f831f1ba3b3249deb9c9a3a4c4b6c957
+      name: 'Backup Full - Elapsed time'
+      ymin_type_1: FIXED
+      graph_items:
+        - drawtype: GRADIENT_LINE
+          color: 00EEEE
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.full.job.time
+        - sortorder: '1'
+          drawtype: BOLD_LINE
+          color: C80000
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.full.job.status
+    - uuid: 94ca01695b1641899670fde947282787
+      name: 'Backup Full - Files transferred'
+      ymin_type_1: FIXED
+      graph_items:
+        - drawtype: GRADIENT_LINE
+          color: 00C800
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.full.job.files
+        - sortorder: '1'
+          drawtype: BOLD_LINE
+          color: C80000
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.full.job.status
+    - uuid: ffe77ddb03514f7f8be9982cfd92063a
+      name: 'Backup Full - Transfer rate'
+      ymin_type_1: FIXED
+      graph_items:
+        - drawtype: GRADIENT_LINE
+          color: CCCC00
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.full.job.speed
+        - sortorder: '1'
+          drawtype: BOLD_LINE
+          color: C80000
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.full.job.status
+    - uuid: fe988baf58da498e829d85cbe829bd53
+      name: 'Backup Incremental - Bytes transferred'
+      ymin_type_1: FIXED
+      graph_items:
+        - drawtype: GRADIENT_LINE
+          color: 9999FF
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.incr.job.bytes
+        - sortorder: '1'
+          drawtype: BOLD_LINE
+          color: C80000
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.incr.job.status
+    - uuid: cfd57a8ffb0a4ee9af07d86ff6c256bb
+      name: 'Backup Incremental - Compression rate'
+      ymin_type_1: FIXED
+      graph_items:
+        - drawtype: GRADIENT_LINE
+          color: FF9999
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.incr.job.compr
+        - sortorder: '1'
+          drawtype: BOLD_LINE
+          color: C80000
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.incr.job.status
+    - uuid: b8284f45394746be90b3e4d246dd8082
+      name: 'Backup Incremental - Elapsed time'
+      ymin_type_1: FIXED
+      graph_items:
+        - drawtype: GRADIENT_LINE
+          color: 00EEEE
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.incr.job.time
+        - sortorder: '1'
+          drawtype: BOLD_LINE
+          color: C80000
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.incr.job.status
+    - uuid: 5260d5f7e5ec418e9f2cd796510e4b85
+      name: 'Backup Incremental - Files transferred'
+      ymin_type_1: FIXED
+      graph_items:
+        - drawtype: GRADIENT_LINE
+          color: 00C800
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.incr.job.files
+        - sortorder: '1'
+          drawtype: BOLD_LINE
+          color: C80000
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.incr.job.status
+    - uuid: 4999312cacec4d1887f992c8ea84e67b
+      name: 'Backup Incremental - Transfer rate'
+      ymin_type_1: FIXED
+      graph_items:
+        - drawtype: GRADIENT_LINE
+          color: CCCC00
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.incr.job.speed
+        - sortorder: '1'
+          drawtype: BOLD_LINE
+          color: C80000
+          item:
+            host: 'Template Bareos Client'
+            key: bareos.incr.job.status

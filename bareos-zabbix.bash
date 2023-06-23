@@ -1,5 +1,5 @@
 #!/bin/bash
-# From: https://github.com/appsinet/bareos-zabbix
+# From: https://github.com/semhoun/bareos-zabbix
 
 # Import configuration file
 source /etc/bareos/bareos-zabbix.conf
@@ -13,7 +13,10 @@ if [ ! -x $zabbixSender ] ; then exit 5 ; fi
 
 # Chose which database command to use
 case $bareosDbSgdb in
-  P) sql="PGPASSWORD=$bareosDbPass /usr/bin/psql -h$bareosDbAddr -p$bareosDbPort -U$bareosDbUser -d$bareosDbName -Atc" ;;
+  P) 
+	export PGPASSWORD=${baculaDbPass}
+	sql="PGPASSWORD=$bareosDbPass /usr/bin/psql -h$bareosDbAddr -p$bareosDbPort -U$bareosDbUser -d$bareosDbName -Atc" 
+	;;
   M) sql="/usr/bin/mysql -N -B -h$bareosDbAddr -P$bareosDbPort -u$bareosDbUser -p$bareosDbPass -D$bareosDbName -e" ;;
   *) exit 7 ;;
 esac
@@ -43,6 +46,9 @@ esac
 # Get client's name from database
 bareosClientName=$($sql "select Client.Name from Client,Job where Job.ClientId=Client.ClientId and Job.JobId=$bareosJobId;" 2>/dev/null)
 if [ -z $bareosClientName ] ; then exit 15 ; fi
+
+# Bareos client name transformation
+if [[ ${bareosClientNameReplacement} ]]; then bareosClientName=$(echo ${bareosClientName} | sed -r ${bareosClientName}) ; fi
 
 # Initialize return as zero
 return=0

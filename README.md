@@ -27,7 +27,7 @@ This project is mainly composed by a bash script and a Zabbix template. The bash
 
 ##### Zabbix template configuration
 
-Link this Zabbix template to each host that has a Bareos's backup job implemented. Each host configured in Zabbix with this template linked needs to have its name equals to the name configured in Bareos's Client resource. Otherwise the data collected by the bash script will not be received by Zabbix server.
+Link this Zabbix template to each host that has a Bareos's backup job implemented.
 
 - **Items**
 
@@ -137,6 +137,6 @@ Link this Zabbix template to each host that has a Bareos's backup job implemente
 
 Feel free to send bug reports and feature requests here:
 
-- https://github.com/appsinet/bareos-zabbix
+- https://github.com/semhoun/bareos-zabbix
 
 If you are using this solution in production, please write me about it. It's very important for me to know that my work is not meaningless.

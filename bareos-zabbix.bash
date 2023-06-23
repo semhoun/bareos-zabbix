@@ -48,7 +48,7 @@ bareosClientName=$($sql "select Client.Name from Client,Job where Job.ClientId=C
 if [ -z $bareosClientName ] ; then exit 15 ; fi
 
 # Bareos client name transformation
-if [[ ${bareosClientNameReplacement} ]]; then bareosClientName=$(echo ${bareosClientName} | sed -r ${bareosClientName}) ; fi
+if [[ ${bareosClientNameReplacement} ]]; then bareosClientName=$(echo ${bareosClientName} | sed -r ${bareosClientNameReplacement}) ; fi
 
 # Initialize return as zero
 return=0
